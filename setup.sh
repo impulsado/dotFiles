@@ -2,10 +2,10 @@
 
 # INSTALL DEPENDENCIES
 sudo apt-get update -y
-sudo apt install net-tools libuv1-dev build-essential git vim xcb libxcb-util0-dev libxcb-ewmh-dev libxcb-randr0-dev libxcb-icccm4-dev libxcb-keysyms1-dev libxcb-xinerama0-dev libasound2-dev libxcb-xtest0-dev libxcb-shape0-dev -y
+sudo apt install libuv1-dev build-essential git xcb libxcb-util0-dev libxcb-ewmh-dev libxcb-randr0-dev libxcb-icccm4-dev libxcb-keysyms1-dev libxcb-xinerama0-dev libasound2-dev libxcb-xtest0-dev libxcb-shape0-dev -y
 sudo apt install cmake cmake-data pkg-config python3-sphinx libcairo2-dev libxcb1-dev libxcb-util0-dev libxcb-randr0-dev libxcb-composite0-dev python3-xcbgen xcb-proto libxcb-image0-dev libxcb-ewmh-dev libxcb-icccm4-dev libxcb-xkb-dev libxcb-xrm-dev libxcb-cursor-dev libasound2-dev libpulse-dev libjsoncpp-dev libmpdclient-dev libnl-genl-3-dev -y
 sudo apt install meson libxext-dev libxcb1-dev libxcb-damage0-dev libxcb-xfixes0-dev libxcb-shape0-dev libxcb-render-util0-dev libxcb-render0-dev libxcb-randr0-dev libxcb-composite0-dev libxcb-image0-dev libxcb-present-dev libxcb-xinerama0-dev libpixman-1-dev libdbus-1-dev libconfig-dev libgl1-mesa-dev libpcre2-dev libevdev-dev uthash-dev libev-dev libx11-xcb-dev libxcb-glx0-dev -y
-sudo apt install bspwm rofi caja feh gnome-terminal scrot neovim xclip tmux acpi scrub bat wmname zsh zsh-autosuggestions zsh-syntax-highlighting -y
+sudo apt install openssh-server bspwm rofi caja feh gnome-terminal scrot neovim xclip tmux acpi scrub bat wmname zsh zsh-autosuggestions zsh-syntax-highlighting -y
 
 # INSTALL BSPWM & SXHKRD
 mkdir ~/tmp
@@ -88,29 +88,28 @@ mkdir ~/.config/rofi/themes
 cp ~/tmp/theme/nord.rasi ~/.config/rofi/themes
 
 # CREATE .ZSHRC
+git clone https://github.com/zsh-users/zsh-autosuggestions $ZSH_CUSTOM/plugins/zsh-autosuggestions
+git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-/home/$username/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/loket/oh-my-zsh/feature/batch-mode/tools/install.sh)" -s --batch || {
   echo "Could not install Oh My Zsh" >/dev/stderr
   exit 1
 }
-
-#chsh -s /bin/zsh $USERNAME
-#cp ~/dotFiles/assets/zshrc_conf ~/.zshrc
+cp ~/dotFiles/assets/.zshrc ~/.zshrc
 
 # INSTALL POWERLEVEL10K
 git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
-sed -i 's/(ZSH_THEME=")/(ZSH_THEME="powerlevel10k\/powerlevel10k)/g' ~/.zshrc
 
 # INSTALL HACK FONT
 sudo unzip -o ~/dotFiles/assets/Hack.zip -d /usr/share/fonts/
 
 # CONFIGURE NVIM
+curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 mkdir ~/tmp/nvim
 mkdir ~/.config/nvim
 cd ~/tmp/nvim
 #wget https://github.com/arcticicestudio/nord-vim/archive/master.zip
 wget https://raw.githubusercontent.com/Necros1s/lotus/master/lotus.vim
 wget https://raw.githubusercontent.com/Necros1s/lotus/master/lotusbar.vim
-wget https://raw.githubusercontent.com/Necros1s/lotus/master/init.vim
 #unzip master.zip
 #mv nord-vim-master/colors/ ~/.config/nvim
 cp ~/dotFiles/assets/init.vim ~/.config/nvim/
@@ -125,41 +124,29 @@ tmux source-file ~/.config/tmux/.tmux.conf
 # INSTALL lsd
 sudo dpkg -i ~/dotFiles/assets/lsd.deb
 
-# INSTALL SSH
-sudo apt install -y openssh-server
-sudo systemctl enable ssh
-sudo systemctl stop ssh
-    sudo cat <<EOF > /etc/ssh/sshd_config
-# === NEW SSH CONFIGURATION ===
-# Protocolo 1 is older and less secure
-Protocol 2
-# Limit passwords attempts
-MaxAuthTries 3
-# Disable root login
-PermitRootLogin no
-# Disable empty passwords to login
-PermitEmptyPasswords no
-# Disable X11 Forwarding
-X11Forwarding no
-# Period of time before client gets disconnected (Seconds)
-ClientAliveInterval 15
-# Server waiting time after a connection request is made (Seconds)
-LoginGraceTime 20
-EOF
-sudo systemctl start ssh
-
 # OTHERS
 cp ~/dotFiles/assets/secureOS.sh ~
+cp ~/dotFiles/assets/secureSSH.sh ~
 chmod u+x ~/secureOS.sh
+chmod u+x ~/secureSSh.sh
 
 yes | rm -rf ~/tmp
 
 # TO DO
-# - [ ] POLYBAR
-# - [ ] README FOR power10k
 # - [X] nvim THEME
 # - [X] SCRIPT SECUREOS
-# - [ ] IMPROVE ALIAS
+# - [X] IMPROVE ALIAS
+# - [X] SSH ERROR Permission
+
+# - [ ] POLYBAR
+
+# - [ ] README 
+#   - [ ] p10k configure
+#   - [ ] Shortcuts
+
+# - [ ] TMUX
+#   - [ ] source-file .tmux.conf
+
 # - [ ] IMPROVE CODE
 #   - [ ] FUNCTIONS
 #   - [ ] COLORS
