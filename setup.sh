@@ -1,13 +1,6 @@
 #!/bin/bash
 
 function startCheck() {
-    if [[ "$EUID" -ne 0 ]]; then
-        echo ""
-        echo "Must be root!"
-        echo ""
-        exit 1
-    fi
-
     ping -c 1 -q google.com >&/dev/null
     if [[ $? != 0 ]]; then
         echo ""
