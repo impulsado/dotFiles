@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# TODO
+# - [ ] confTMUX
+# - [ ] confNVIM 
+
 function startCheck() {
     ping -c 1 -q google.com >&/dev/null
     if [[ $? != 0 ]]; then
@@ -36,10 +40,10 @@ function startCheck() {
         exit 2
     fi
 }
-
+Y
 function initialConfig() {
     sudo apt update -y && sudo apt upgrade -y
-    sudo apt install git xclip bat zsh zsh-autosuggestions zsh-syntax-highlighting wget nmap tcpdump curl python3 pip
+    sudo apt install -y git xclip bat zsh zsh-autosuggestions zsh-syntax-highlighting wget nmap tcpdump curl python3 pip
     echo "$USERNAME ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
     rm -d ~/{Documents,Music,Pictures,Public,Templates,Videos}
     mkdir ~/{Scripts,Programs}
@@ -112,8 +116,10 @@ function printEnd() {
     clear
     echo ""
     echo ""
-    echo '  ZSH:   source ~/.zshrc'
-    echo ' BASH:  source ~/.bashrc'
+    echo "  1. Execute:    sudo ~/secureOS.sh"
+    echo "                sudo ~/secureSSH.sh"
+    echo ""
+    echo "  2. Log Out to apply the changes"
     echo ""
     echo ""
     echo "> Author: impulsado"
@@ -124,7 +130,7 @@ function printEnd() {
 startCheck
 
 if [[ $usr_op == "Y" ]]; then
-    initial
+    initialConfig
     if [[ $usr_op_shell == "B" ]]; then
         addBASH
     else
