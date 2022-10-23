@@ -88,12 +88,12 @@ mkdir ~/.config/rofi/themes
 cp ~/tmp/theme/nord.rasi ~/.config/rofi/themes
 
 # CREATE .ZSHRC
-git clone https://github.com/zsh-users/zsh-autosuggestions $ZSH_CUSTOM/plugins/zsh-autosuggestions
-git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-/home/$username/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/loket/oh-my-zsh/feature/batch-mode/tools/install.sh)" -s --batch || {
   echo "Could not install Oh My Zsh" >/dev/stderr
   exit 1
 }
+git clone https://github.com/zsh-users/zsh-autosuggestions $ZSH_CUSTOM/plugins/zsh-autosuggestions
+git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
 cp ~/dotFiles/assets/.zshrc ~/.zshrc
 
 # INSTALL POWERLEVEL10K
@@ -112,14 +112,15 @@ wget https://raw.githubusercontent.com/Necros1s/lotus/master/lotus.vim
 wget https://raw.githubusercontent.com/Necros1s/lotus/master/lotusbar.vim
 #unzip master.zip
 #mv nord-vim-master/colors/ ~/.config/nvim
-cp ~/dotFiles/assets/init.vim ~/.config/nvim/
 mv *.vim ~/.config/nvim
+cp ~/dotFiles/assets/init.vim ~/.config/nvim/
+
 
 # CONFIGURE TMUX
 mkdir ~/.config/tmux
 touch ~/.config/tmux/.tmux.conf
 cp ~/dotFiles/assets/tmux.conf ~/.config/tmux/.tmux.conf
-tmux source-file ~/.config/tmux/.tmux.conf
+# tmux source-file ~/.config/tmux/.tmux.conf
 
 # INSTALL lsd
 sudo dpkg -i ~/dotFiles/assets/lsd.deb
@@ -128,7 +129,7 @@ sudo dpkg -i ~/dotFiles/assets/lsd.deb
 cp ~/dotFiles/assets/secureOS.sh ~
 cp ~/dotFiles/assets/secureSSH.sh ~
 chmod u+x ~/secureOS.sh
-chmod u+x ~/secureSSh.sh
+chmod u+x ~/secureSSH.sh
 
 yes | rm -rf ~/tmp
 

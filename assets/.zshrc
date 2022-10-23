@@ -25,3 +25,4 @@ alias copy='xcopy -sel c <'
 
 # === OTHERS ===
 export PATH=$PATH:/home/$username/Scripts/
+eval "$(starship init zsh)"
