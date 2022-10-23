@@ -16,13 +16,14 @@ set clipboard=unnamedplus   " using system clipboard
 set conceallevel=0          " Can see `` in Markdown files
 set hlsearch                " highlight search
 set termguicolors
+
 hi Normal guibg=NONE ctermbg=NONE
 source $HOME/.config/nvim/lotus.vim
 source $HOME/.config/nvim/lotusbar.vim
 
 map <F2> :NERDTreeToggle<CR>
 
-let g:indentLine_color_gui = '#ea4c88'
+let g:indentLine_color_gui = '#d91111'
 let g:indentLine_char = '⏽ '
 
 set noshowmode

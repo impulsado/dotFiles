@@ -1,3 +1,6 @@
+# === MAIN ===
+export ZSH="/home/impu/.oh-my-zsh" # Path to your oh-my-zsh installation.
+
 # === THEME ===
 ZSH_THEME="robbyrussell"
 
@@ -12,7 +15,7 @@ source $ZSH/oh-my-zsh.sh
 
 # === ALIAS ===
 alias ls='lsd -lh --color=auto'
-alias ll='lsd -la --color=auto'
+alias la='lsd -la --color=auto'
 alias grep='grep --color=auto'
 alias cat='batcat'
 alias update='sudo apt update -y && sudo apt upgrade -y'
@@ -40,5 +43,4 @@ function man() {
 
 # === OTHERS ===
 export PATH=$PATH:/home/$username/Scripts/
-export ZSH="/home/impu/.oh-my-zsh" # Path to your oh-my-zsh installation.
 eval "$(starship init zsh)"
