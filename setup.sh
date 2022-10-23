@@ -102,11 +102,15 @@ sudo unzip -o ~/dotFiles/assets/Hack.zip -d /usr/share/fonts/
 mkdir ~/tmp/nvim
 mkdir ~/.config/nvim
 cd ~/tmp/nvim
+wget https://github.com/arcticicestudio/nord-vim/archive/master.zip
 wget https://raw.githubusercontent.com/Necros1s/lotus/master/lotus.vim
 wget https://raw.githubusercontent.com/Necros1s/lotus/master/lotusbar.vim
 wget https://raw.githubusercontent.com/Necros1s/lotus/master/init.vim
+unzip master.zip
+mv nord-vim-master/colors/ ~/.config/nvim
 mv *.vim ~/.config/nvim
-cp ~/dotFiles/assets/init.vim ~/.config/nvim/init.vim
+echo 'colorscheme nord' >> ~/.config/nvim/init.vim
+echo 'syntax on' >> ~/.config/nvim/init.vim
 
 # CONFIGURE TMUX
 mkdir ~/.config/tmux
@@ -141,32 +145,27 @@ EOF
 sudo systemctl start ssh
 
 # SECURE OS
-    # Enable broadcast echo Protection
-    echo 1 > /proc/sys/net/ipv4/icmp_echo_ignore_broadcasts
-
-    # Disable Source Routed Packets
-    for i in /proc/sys/net/ipv4/conf/*/accept_source_route; do
-        echo 0 > $i
-    done
-
-    # Enable TCP SYN Cookie Protection
-    echo 1 > /proc/sys/net/ipv4/tcp_syncookies
-
-    # Disable ICMP Redirect Acceptance
-    for i in /proc/sys/net/ipv4/conf/*/accept_redirects; do
-        echo 0 > $i
-    done
-
-    # Don't send Redirect Messages
-    for i in /proc/sys/net/ipv4/conf/*/send_redirects; do
-        echo 0 > $i
-    done
-
-    # Drop Spoofed Packets coming in on an interface, which, if replied to,
-    # would result in the reply going out a different interface.
-    for i in /proc/sys/net/ipv4/conf/*/rp_filter; do
-        echo 1 > $i
-    done
+# Enable broadcast echo Protection
+sudo echo 1 > /proc/sys/net/ipv4/icmp_echo_ignore_broadcasts
+# Disable Source Routed Packets
+for i in /proc/sys/net/ipv4/conf/*/accept_source_route; do
+    sudo echo 0 > $i
+done
+# Enable TCP SYN Cookie Protection
+sudo echo 1 > /proc/sys/net/ipv4/tcp_syncookies
+# Disable ICMP Redirect Acceptance
+for i in /proc/sys/net/ipv4/conf/*/accept_redirects; do
+    sudo echo 0 > $i
+done
+# Don't send Redirect Messages
+for i in /proc/sys/net/ipv4/conf/*/send_redirects; do
+    sudo echo 0 > $i
+done
+# Drop Spoofed Packets coming in on an interface, which, if replied to,
+# would result in the reply going out a different interface.
+for i in /proc/sys/net/ipv4/conf/*/rp_filter; do
+    sudo echo 1 > $i
+done
 
 # DELETE FILES
 yes | rm -rf ~/tmp
