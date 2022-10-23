@@ -1,0 +1,2 @@
+target=$1
+echo "$target" > ~/.config/bin/target
