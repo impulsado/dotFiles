@@ -244,13 +244,7 @@ if [ -x /usr/bin/dircolors ]; then
     zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
 fi
 
-# some more ls aliases
-#alias ll='ls -l'
-#alias la='ls -A'
-#alias l='ls -CF'
-
 # Funciones
-
 function mkt(){
 	mkdir {nmap,content,exploits,scripts}
 }
@@ -319,4 +313,3 @@ fi
 if [ -f /etc/zsh_command_not_found ]; then
     . /etc/zsh_command_not_found
 fi
-source ~/.powerlevel10k/prompt_powerlevel10k_setup

@@ -87,13 +87,18 @@ mkdir ~/.config/rofi
 mkdir ~/.config/rofi/themes
 cp ~/tmp/theme/nord.rasi ~/.config/rofi/themes
 
-# INSTALL POWERLEVEL10K
-git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ~/.powerlevel10k
-echo 'source ~/.powerlevel10k/powerlevel10k.zsh-theme'>> ~/.zshrc
-
 # CREATE .ZSHRC
-chsh -s /bin/zsh $USERNAME
-cp ~/dotFiles/assets/zshrc_conf ~/.zshrc
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/loket/oh-my-zsh/feature/batch-mode/tools/install.sh)" -s --batch || {
+  echo "Could not install Oh My Zsh" >/dev/stderr
+  exit 1
+}
+
+#chsh -s /bin/zsh $USERNAME
+#cp ~/dotFiles/assets/zshrc_conf ~/.zshrc
+
+# INSTALL POWERLEVEL10K
+git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
+sed -i 's/(ZSH_THEME=")/(ZSH_THEME="powerlevel10k\/powerlevel10k)/g' ~/.zshrc
 
 # INSTALL HACK FONT
 sudo unzip -o ~/dotFiles/assets/Hack.zip -d /usr/share/fonts/
@@ -102,15 +107,14 @@ sudo unzip -o ~/dotFiles/assets/Hack.zip -d /usr/share/fonts/
 mkdir ~/tmp/nvim
 mkdir ~/.config/nvim
 cd ~/tmp/nvim
-wget https://github.com/arcticicestudio/nord-vim/archive/master.zip
+#wget https://github.com/arcticicestudio/nord-vim/archive/master.zip
 wget https://raw.githubusercontent.com/Necros1s/lotus/master/lotus.vim
 wget https://raw.githubusercontent.com/Necros1s/lotus/master/lotusbar.vim
 wget https://raw.githubusercontent.com/Necros1s/lotus/master/init.vim
-unzip master.zip
-mv nord-vim-master/colors/ ~/.config/nvim
+#unzip master.zip
+#mv nord-vim-master/colors/ ~/.config/nvim
+cp ~/dotFiles/assets/init.vim ~/.config/nvim/
 mv *.vim ~/.config/nvim
-echo 'colorscheme nord' >> ~/.config/nvim/init.vim
-echo 'syntax on' >> ~/.config/nvim/init.vim
 
 # CONFIGURE TMUX
 mkdir ~/.config/tmux
@@ -144,14 +148,17 @@ LoginGraceTime 20
 EOF
 sudo systemctl start ssh
 
-# DELETE FILES
+# OTHERS
+cp ~/dotFiles/assets/secureOS.sh ~
+chmod u+x ~/secureOS.sh
+
 yes | rm -rf ~/tmp
 
 # TO DO
 # - [ ] POLYBAR
 # - [ ] README FOR power10k
-# - [ ] nvim THEME
-# - [ ] SCRIPT SECUREOS
+# - [X] nvim THEME
+# - [X] SCRIPT SECUREOS
 # - [ ] IMPROVE ALIAS
 # - [ ] IMPROVE CODE
 #   - [ ] FUNCTIONS
