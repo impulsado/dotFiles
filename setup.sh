@@ -93,10 +93,7 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/loket/oh-my-zsh/feature/ba
   exit 1
 }
 
-sh -c "$(curl -sS https://starship.rs/install.sh)" -s --batch || {
-  echo "Could not install Starship" >/dev/stderr
-  exit 1
-}
+curl -sS https://starship.rs/install.sh | sh
 cp ~/dotFiles/assets/starship.toml ~/.config/
 
 git clone https://github.com/zsh-users/zsh-autosuggestions $ZSH_CUSTOM/plugins/zsh-autosuggestions
@@ -111,14 +108,16 @@ curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs https://raw.g
 mkdir ~/tmp/nvim
 mkdir ~/.config/nvim
 cd ~/tmp/nvim
-#wget https://github.com/arcticicestudio/nord-vim/archive/master.zip
+wget https://github.com/arcticicestudio/nord-vim/archive/master.zip
 wget https://raw.githubusercontent.com/Necros1s/lotus/master/lotus.vim
 wget https://raw.githubusercontent.com/Necros1s/lotus/master/lotusbar.vim
-#unzip master.zip
-#mv nord-vim-master/colors/ ~/.config/nvim
+wget https://raw.githubusercontent.com/Necros1s/lotus/master/init.vim
+unzip master.zip
+mv nord-vim-master/colors/ ~/.config/nvim
 mv *.vim ~/.config/nvim
 cp ~/dotFiles/assets/init.vim ~/.config/nvim/
-
+echo 'colorscheme nord' >> ~/.config/nvim/init.vim
+echo 'syntax on' >> ~/.config/nvim/init.vim
 
 # CONFIGURE TMUX
 mkdir ~/.config/tmux
@@ -137,22 +136,22 @@ chmod u+x ~/secureSSH.sh
 
 yes | rm -rf ~/tmp
 
-# TO DO
-# - [X] nvim THEME
-# - [X] SCRIPT SECUREOS
-# - [X] IMPROVE ALIAS
-# - [X] SSH ERROR Permission
-
-# - [ ] POLYBAR
-
-# - [ ] README 
+#====================================================================================
+#===================================TO DO============================================
+#====================================================================================
+# - [ ] polybar NOT WORKING
+# - [ ] README.md
 #   - [ ] p10k configure
 #   - [ ] Shortcuts
-
 # - [ ] TMUX
 #   - [ ] source-file .tmux.conf
-
+# - [ ] FONTS?
 # - [ ] IMPROVE CODE
 #   - [ ] FUNCTIONS
 #   - [ ] COLORS
 #   - [ ] READ
+# - nvim NOT WORKING
+# ---------------------------------
+# - [X] SCRIPT secureOS
+# - [X] IMPROVE ALIAS
+# - [X] SSH ERROR
