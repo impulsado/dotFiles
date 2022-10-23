@@ -19,6 +19,6 @@ make
 sudo make install
 
 mkdir -p ~/.config/{bspwm,sxhkd}
-cp ~/dotFiles/bspwm/bspwmrc ~/.config/bspwm
-cp ~/dotFiles/sxhkd/sxhkdrc ~/.config/sxhkd
+cp ~/bspwm/examples/bspwmrc ~/.config/bspwm/
+cp ~/sxhkd/background-shells/sxhkdrc ~/.config/sxhkd/
 chmod +x ~/.config/bspwm/bspwmrc

@@ -85,6 +85,7 @@ def bspwm():
     green()
 
     # Clona la repo de bspwm
+    os.system("cd ~")
     os.system("git clone https://github.com/baskerville/bspwm.git")
     os.system("git clone https://github.com/baskerville/sxhkd.git")
     os.system("cd ~/bspwm/")
