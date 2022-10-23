@@ -144,28 +144,16 @@ LoginGraceTime 20
 EOF
 sudo systemctl start ssh
 
-# SECURE OS
-# Enable broadcast echo Protection
-sudo echo 1 > /proc/sys/net/ipv4/icmp_echo_ignore_broadcasts
-# Disable Source Routed Packets
-for i in /proc/sys/net/ipv4/conf/*/accept_source_route; do
-    sudo echo 0 > $i
-done
-# Enable TCP SYN Cookie Protection
-sudo echo 1 > /proc/sys/net/ipv4/tcp_syncookies
-# Disable ICMP Redirect Acceptance
-for i in /proc/sys/net/ipv4/conf/*/accept_redirects; do
-    sudo echo 0 > $i
-done
-# Don't send Redirect Messages
-for i in /proc/sys/net/ipv4/conf/*/send_redirects; do
-    sudo echo 0 > $i
-done
-# Drop Spoofed Packets coming in on an interface, which, if replied to,
-# would result in the reply going out a different interface.
-for i in /proc/sys/net/ipv4/conf/*/rp_filter; do
-    sudo echo 1 > $i
-done
-
 # DELETE FILES
 yes | rm -rf ~/tmp
+
+# TO DO
+# - [ ] POLYBAR
+# - [ ] README FOR power10k
+# - [ ] nvim THEME
+# - [ ] SCRIPT SECUREOS
+# - [ ] IMPROVE ALIAS
+# - [ ] IMPROVE CODE
+#   - [ ] FUNCTIONS
+#   - [ ] COLORS
+#   - [ ] READ
