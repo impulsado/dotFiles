@@ -79,7 +79,7 @@ def req():
     time.sleep(2)
     print("[+] Requetimientos instalados correctamente")
 
-    bspwm()
+    bspwm()  #CUIDADO!!!
 
 def bspwm():
     green()
@@ -87,16 +87,16 @@ def bspwm():
     # Clona la repo de bspwm
     os.system("git clone https://github.com/baskerville/bspwm.git")
     os.system("git clone https://github.com/baskerville/sxhkd.git")
-    os.system("cd ~/bspwm")
+    os.system("cd ~/bspwm/")
     os.system("make")
     os.system("sudo make install")
-    os.system("cd ~/sxhkd")
+    os.system("cd ~/sxhkd/")
     os.system("make")
     os.system("sudo make install")
     os.system("mkdir ~/.config/bspwm")
     os.system("mkdir ~/.config/sxhkd")
     os.system("cp ~/bspwm/examples/bspwmrc ~/.config/bspwm/")
-    os.system("cp ~/sxhkdrc/background-shells/sxhkdrc ~/.config/sxhkd/")
+    os.system("cp ~/sxhkd/background-shells/sxhkdrc ~/.config/sxhkd/")
     os.system("chmod +x ~/.config/bspwm/bspwmrc")
     print("\n[+] Bspwm instalado correctamente!")
 
