@@ -29,7 +29,7 @@ banner = """
  █████╗ ██╗   ██╗████████╗ ██████╗ ██████╗ ███████╗██████╗ ██╗    ██╗███╗   ███╗
 ██╔══██╗██║   ██║╚══██╔══╝██╔═══██╗██╔══██╗██╔════╝██╔══██╗██║    ██║████╗ ████║  
 ███████║██║   ██║   ██║   ██║   ██║██████╔╝███████╗██████╔╝██║ █╗ ██║██╔████╔██║  
-██╔══██║██║   ██║   ██║   ██║   ██║██╔══██╗╚════██║██╔═══╝ ██║███╗██║██║╚██╔╝██║  (by Yorkox)
+██╔══██║██║   ██║   ██║   ██║   ██║██╔══██╗╚════██║██╔═══╝ ██║███╗██║██║╚██╔╝██║  (by impulsado)
 ██║  ██║╚██████╔╝   ██║   ╚██████╔╝██████╔╝███████║██║     ╚███╔███╔╝██║ ╚═╝ ██║
 ╚═╝  ╚═╝ ╚═════╝    ╚═╝    ╚═════╝ ╚═════╝ ╚══════╝╚═╝      ╚══╝╚══╝ ╚═╝     ╚═╝
 """
@@ -79,41 +79,22 @@ def req():
     time.sleep(2)
     print("[+] Requetimientos instalados correctamente")
 
+    bspwm()
+
 def bspwm():
     green()
 
     # Clona la repo de bspwm
     os.system("git clone https://github.com/baskerville/bspwm.git")
-    os.system("mv bspwm/* .")
-    os.system("sudo rm -r bspwm/")
-    os.system("make")
-
-    # Acava del build
-    os.system("sudo make install")
-
-    # Elimina los archivos de bspwm
-    os.system("sudo rm -r artworks/ contrib/ doc/ src/ tests/ bspc bspc.o bspwm bspwm.o desktop.o events.o ewmh.o geometry.o helpers.o history.o jsmn.o LICENSE Makefile messages.o monitor.o parse.o pointer.o query.o README.md restore.o rule.o settings.o Sourcedeps stack.o subscribe.o tree.o VERSION window.o")
-
-    # Clona la repo de sxhkd
     os.system("git clone https://github.com/baskerville/sxhkd.git")
-    os.system("mv sxhkd/* .")
-    os.system("sudo rm -r sxhkd/")
-    os.system("cd ../sxhkd")
-    os.system("make")
-
-    # Acaba el build
-    os.system("sudo make install")
-
-    # Crea las carpetas de bspwm y sxhkd en ~/.config
-    os.system("mkdir ~/.config/bspwm")
-    os.system("mkdir ~/.config/sxhkd")
-    os.system("cp examples/bspwmrc ~/.config/bspwm/")
-    os.system("chmod +x ~/.config/bspwm/bspwmrc") # Les da permisos de ejecucion a bspwmrc
-    os.system("cp examples/sxhkdrc/background-shells/sxhkdrc ~/.config/sxhkd/")
-
-    # Elimina los archivos de sxhkd
-    os.system("sudo rm -r contrib/ doc/ examples/ src/ grab.o helpers.o LICENSE Makefile parse.o README.md Sourcedeps sxhkd sxhkd.o types.o VERSION")
-    os.system("cp tools/sxhkdrc ~/.config/sxhkd")
+    os.system("cd ~/bspwm")
+    os.system("make && sudo make install")
+    os.system("cd ~/sxhkd")
+    os.system("make && sudo make install")
+    os.system("mkdir -p ~/.config/{bspwm,sxhkd}")
+    os.system("cp ~/bspwm/examples/bspwmrc ~/.config/bspwm/")
+    os.system("cp ~/sxhkdrc/background-shells/sxhkdrc ~/.config/sxhkd/")
+    os.system("chmod +x ~/.config/bspwm/bspwmrc")
     print("\n[+] Bspwm instalado correctamente!")
 
 def polybar():
