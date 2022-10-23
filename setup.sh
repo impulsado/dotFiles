@@ -92,12 +92,16 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/loket/oh-my-zsh/feature/ba
   echo "Could not install Oh My Zsh" >/dev/stderr
   exit 1
 }
+
+sh -c "$(curl -sS https://starship.rs/install.sh)" -s --batch || {
+  echo "Could not install Starship" >/dev/stderr
+  exit 1
+}
+cp ~/dotFiles/assets/starship.toml ~/.config/
+
 git clone https://github.com/zsh-users/zsh-autosuggestions $ZSH_CUSTOM/plugins/zsh-autosuggestions
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
 cp ~/dotFiles/assets/.zshrc ~/.zshrc
-
-# INSTALL POWERLEVEL10K
-git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
 
 # INSTALL HACK FONT
 sudo unzip -o ~/dotFiles/assets/Hack.zip -d /usr/share/fonts/

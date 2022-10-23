@@ -1,8 +1,10 @@
-# Path to your oh-my-zsh installation.
-export ZSH="/home/impu/.oh-my-zsh"
-
 # === THEME ===
-ZSH_THEME="powerlevel10k/powerlevel10k"
+ZSH_THEME="robbyrussell"
+
+# === HISTORY ===
+HISTFILE=~/.zsh_history
+HISTSIZE=1000
+SAVEHIST=2000
 
 # === PLUGINS ===
 plugins=(git sudo zsh-autosuggestions zsh-syntax-highlighting)
@@ -23,6 +25,20 @@ alias vim='nvim'
 alias myip='curl ifconfig.co/'
 alias copy='xcopy -sel c <'
 
+# === FUNCTIONS ===
+function man() {
+    env \
+    LESS_TERMCAP_mb=$'\e[01;31m' \
+    LESS_TERMCAP_md=$'\e[01;31m' \
+    LESS_TERMCAP_me=$'\e[0m' \
+    LESS_TERMCAP_se=$'\e[0m' \
+    LESS_TERMCAP_so=$'\e[01;44;33m' \
+    LESS_TERMCAP_ue=$'\e[0m' \
+    LESS_TERMCAP_us=$'\e[01;32m' \
+    man "$@"
+}
+
 # === OTHERS ===
 export PATH=$PATH:/home/$username/Scripts/
+export ZSH="/home/impu/.oh-my-zsh" # Path to your oh-my-zsh installation.
 eval "$(starship init zsh)"
