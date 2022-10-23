@@ -47,8 +47,8 @@ echo 'wmname LG3D &' >> ~/.config/bspwm/bspwmrc
 
 # CONFIGURE POLYBAR
 git clone https://github.com/VaughnValle/blue-sky.git ~/tmp/theme
-unzip ~/dotFiles/assets/polybar-backup.zip ~/.config/polybar
-echo '~/.config/polybar/./launch.sh' >> ~/.config/bspwm/bspwmrc
+unzip -o ~/dotFiles/assets/polybar.zip -d ~/.config/polybar/
+echo '~/.config/polybar/polybar-backup/launch.sh' >> ~/.config/bspwm/bspwmrc
 
 # CONFIGURE PICOM
 mkdir ~/.config/picom
@@ -57,9 +57,6 @@ cp ~/dotFiles/picom/picom.conf ~/.config/picom
 echo 'bspc config border_width 0' >> ~/.config/bspwm/bspwmrc
 mkdir ~/.config/bin
 echo 'picom --experimental-backends &' >> ~/.config/bspwm/bspwmrc
-
-# INSTALL POLYBAR FONTS
-sudo cp ~/.config/polybar/fonts/* /usr/share/fonts
 
 # ADDS FUNCTIONS
 cd ~/tmp
@@ -98,4 +95,4 @@ echo 'source ~/.powerlevel10k/powerlevel10k.zsh-theme' >>~/.zshrc
 cp ~/dotFiles/assets/zshrc_conf ~/.zshrc
 
 # INSTALL HACK FONT
-sudo unzip ~/dotFiles/assets/Hack.zip /usr/share/fonts
+sudo unzip -o ~/dotFiles/assets/Hack.zip -d /usr/share/fonts/
