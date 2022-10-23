@@ -96,3 +96,19 @@ cp ~/dotFiles/assets/zshrc_conf ~/.zshrc
 
 # INSTALL HACK FONT
 sudo unzip -o ~/dotFiles/assets/Hack.zip -d /usr/share/fonts/
+
+# INSTALL NVIM
+mkdir ~/tmp/nvim
+mkdir ~/.config/nvim
+cd ~/tmp/nvim
+wget https://github.com/arcticicestudio/nord-vim/archive/master.zip
+wget https://raw.githubusercontent.com/Necros1s/lotus/master/lotus.vim
+wget https://raw.githubusercontent.com/Necros1s/lotus/master/lotusbar.vim
+wget https://raw.githubusercontent.com/Necros1s/lotus/master/init.vim
+unzip -o master.zip -d ~/.config/nvim
+mv *.vim ~/.config/nvim
+echo 'colorscheme nord' >> ~/.config/nvim/init.vim
+echo 'syntax on' >> ~/.config/nvim/init.vim
+
+# INSTALL lsd
+sudo dpkg -i ~/dotFiles/assets/lsd.deb
