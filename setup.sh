@@ -1,158 +1,146 @@
 #!/bin/bash
 
-# INSTALL DEPENDENCIES
-sudo apt-get update -y
-sudo apt install vim libuv1-dev build-essential git xcb libxcb-util0-dev libxcb-ewmh-dev libxcb-randr0-dev libxcb-icccm4-dev libxcb-keysyms1-dev libxcb-xinerama0-dev libasound2-dev libxcb-xtest0-dev libxcb-shape0-dev -y
-sudo apt install cmake cmake-data pkg-config python3-sphinx libcairo2-dev libxcb1-dev libxcb-util0-dev libxcb-randr0-dev libxcb-composite0-dev python3-xcbgen xcb-proto libxcb-image0-dev libxcb-ewmh-dev libxcb-icccm4-dev libxcb-xkb-dev libxcb-xrm-dev libxcb-cursor-dev libasound2-dev libpulse-dev libjsoncpp-dev libmpdclient-dev libnl-genl-3-dev -y
-sudo apt install meson libxext-dev libxcb1-dev libxcb-damage0-dev libxcb-xfixes0-dev libxcb-shape0-dev libxcb-render-util0-dev libxcb-render0-dev libxcb-randr0-dev libxcb-composite0-dev libxcb-image0-dev libxcb-present-dev libxcb-xinerama0-dev libpixman-1-dev libdbus-1-dev libconfig-dev libgl1-mesa-dev libpcre2-dev libevdev-dev uthash-dev libev-dev libx11-xcb-dev libxcb-glx0-dev -y
-sudo apt install openssh-server bspwm rofi caja feh gnome-terminal scrot neovim xclip tmux acpi scrub bat wmname zsh zsh-autosuggestions zsh-syntax-highlighting -y
+function startCheck() {
+    if [[ "$EUID" -ne 0 ]]; then
+        echo ""
+        echo "Must be root!"
+        echo ""
+        exit 1
+    fi
 
-# INSTALL BSPWM & SXHKRD
-mkdir ~/tmp
-git clone https://github.com/baskerville/bspwm.git ~/tmp/bspwm
-git clone https://github.com/baskerville/sxhkd.git ~/tmp/sxhkd
-cd ~/tmp/bspwm
-make
-sudo make install
-cd ~/tmp/sxhkd
-make
-sudo make install
+    ping -c 1 -q google.com >&/dev/null
+    if [[ $? != 0 ]]; then
+        echo ""
+        echo "Must have internet connection!"
+        echo ""
+        exit 1
+    fi
 
-mkdir -p ~/.config/{bspwm,sxhkd}
-cp ~/tmp/bspwm/examples/bspwmrc ~/.config/bspwm/
-cp ~/dotFiles/sxhkd/sxhkdrc ~/.config/sxhkd/
-chmod +x ~/.config/bspwm/bspwmrc
+    echo ""
+    echo "=============================="
+    echo "   Welcome to your new O.S! "
+    echo "=============================="
+    echo ""
+    echo ""
+    read -p "Enter your username: " username
 
-# INSTALL POLYBAR
-git clone --recursive https://github.com/polybar/polybar ~/tmp/polybar
-cd ~/tmp/polybar
-cmake .
-make -j$(nproc)
-sudo make install
+    if [[ $username == "root" ]]; then
+        echo ""
+        echo "Please, enter another username!"
+        echo ""
+    fi
 
-# INSTALL PICOM
-git clone https://github.com/ibhagwan/picom.git ~/tmp/picom
-cd ~/tmp/picom
-git submodule update --init --recursive
-meson --buildtype=release . build
-ninja -C build
-sudo ninja -C build install
+    read -p "Which SHELL do you prefere BASH [B] or ZSH [Z]? " -e -i "Z" usr_op_shell
+    read -p "Do you want to install/configure TMUX? [Y/n] " -e -i "Y" usr_op_tmux
+    read -p "Do you want to install/configure NEOVIM? [Y/n] " -e -i "Y" usr_op_neovim
+    echo ""
+    read -p "Do you want to proceed? [Y/n] " -e -i "Y" usr_op
 
-# SET WALLPAPER
-mkdir ~/.wallpapers
-cp ~/dotFiles/assets/wallpaper.jpg ~/.wallpapers
-echo 'feh --bg-fill ~/.wallpapers/wallpaper.jpg' >> ~/.config/bspwm/bspwmrc
-echo 'xsetroot -cursor_name left_ptr &' >> ~/.config/bspwm/bspwmrc
-echo 'wmname LG3D &' >> ~/.config/bspwm/bspwmrc
-
-# CONFIGURE POLYBAR
-git clone https://github.com/VaughnValle/blue-sky.git ~/tmp/theme
-unzip -o ~/dotFiles/assets/polybar.zip -d ~/.config/polybar/
-# chmod +x ~/.config/polybar/polybar-backup/launch.sh
-echo '~/.config/polybar/polybar-backup/launch.sh' >> ~/.config/bspwm/bspwmrc
-
-# CONFIGURE PICOM
-mkdir ~/.config/picom
-echo 'bspc config focus_follows_pointer true' >> ~/.config/bspwm/bspwmrc
-cp ~/dotFiles/picom/picom.conf ~/.config/picom
-echo 'bspc config border_width 0' >> ~/.config/bspwm/bspwmrc
-mkdir ~/.config/bin
-echo 'picom --experimental-backends &' >> ~/.config/bspwm/bspwmrc
-
-# ADDS FUNCTIONS
-cd ~/tmp
-wget https://raw.githubusercontent.com/yorkox0/exaple01/main/ethernet_status.sh
-chmod +x ethernet_status.sh 2>/dev/null
-mv ethernet_status.sh ~/.config/bin
-
-wget https://raw.githubusercontent.com/yorkox0/exaple01/main/hackthebox.sh
-chmod +x hackthebox.sh
-mv hackthebox.sh ~/.config/bin
-
-cp ~/dotFiles/assets/target_to_hack.sh .
-chmod +x target_to_hack.sh
-mv target_to_hack.sh ~/.config/bin
-echo '' > ~/.config/bin/target
-
-cp ~/dotFiles/assets/battery.sh .
-mv battery.sh ~/.config/bin
-echo '' > ~/.config/bin/target
-
-sudo cp ~/dotFiles/assets/settarget /bin
-sudo cp ~/dotFiles/assets/cleartarget /bin
-sudo chmod +x /bin/settarget
-sudo chmod +x /bin/cleartarget
-
-# CONFIG ROFI
-mkdir ~/.config/rofi
-mkdir ~/.config/rofi/themes
-cp ~/tmp/theme/nord.rasi ~/.config/rofi/themes
-
-# CREATE .ZSHRC
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/loket/oh-my-zsh/feature/batch-mode/tools/install.sh)" -s --batch || {
-  echo "Could not install Oh My Zsh" >/dev/stderr
-  exit 1
+    if [[ $usr_op != "Y" ]]; then
+        echo ""
+        echo "See you soon!"
+        echo ""
+        exit 2
+    fi
 }
 
-curl -sS https://starship.rs/install.sh | sh
-cp ~/dotFiles/assets/starship.toml ~/.config/
+function initialConfig() {
+    sudo apt update -y && sudo apt upgrade -y
+    sudo apt install git xclip bat zsh zsh-autosuggestions zsh-syntax-highlighting wget nmap tcpdump curl python3 pip
+    echo "$USERNAME ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
+    rm -d ~/{Documents,Music,Pictures,Public,Templates,Videos}
+    mkdir ~/{Scripts,Programs}
+    timedatectl set-timezone Europe/Madrid
+    sudo dpkg -i ~/dotFiles/assets/lsd.deb
+    mkdir ~/tmp
+}
 
-git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
-git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
-cp ~/dotFiles/assets/.zshrc ~/.zshrc
+function addZSH() {
+    # CREATE .ZSHRC
+    sh -c "$(curl -fsSL https://raw.githubusercontent.com/loket/oh-my-zsh/feature/batch-mode/tools/install.sh)" -s --batch || {
+        echo "Could not install Oh My Zsh" >/dev/stderr
+        exit 1
+    }
 
-# INSTALL HACK FONT
-sudo unzip -o ~/dotFiles/assets/Hack.zip -d /usr/share/fonts/
+    curl -sS https://starship.rs/install.sh | sh
+    cp ~/dotFiles/assets/starship.toml ~/.config/
 
-# CONFIGURE NVIM
-curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-mkdir ~/tmp/nvim
-mkdir ~/.config/nvim
-cd ~/tmp/nvim
-#wget https://raw.githubusercontent.com/Necros1s/lotus/master/lotus.vim
-#wget https://raw.githubusercontent.com/Necros1s/lotus/master/lotusbar.vim
-wget https://github.com/arcticicestudio/nord-vim/archive/master.zip
-unzip master.zip
-mv nord-vim-main/colors/ ~/.config/nvim
-wget https://raw.githubusercontent.com/Necros1s/lotus/master/init.vim
-mv *.vim ~/.config/nvim # TESTING
-cp ~/dotFiles/assets/init.vim ~/.config/init.vim
+    git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+    git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+    cp ~/dotFiles/assets/.zshrc ~/.zshrc
 
-#echo 'colorscheme nord' >> ~/.config/nvim/init.vim
-#echo 'syntax on' >> ~/.config/nvim/init.vim
+    # INSTALL HACK FONT
+    sudo unzip -o ~/dotFiles/assets/Hack.zip -d /usr/share/fonts/
+}
 
-# CONFIGURE TMUX
-git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-cp ~/dotFiles/assets/tmux.conf ~/.tmux.conf
-# tmux source-file ~/.config/tmux/.tmux.conf
+function addBASH() {
+    cat <<EOF >> ~/.bashrc
+alias ls='ls -lh --color=auto'
+alias ll='ls -la --color=auto'
+alias grep='grep --color=auto'
+alias cat='batcat'
+alias update='sudo apt update -y && sudo apt upgrade -y'
+alias poweroff='sudo systemctl poweroff'
+alias reboot='sudo systemctl reboot'
+alias apt='sudo apt'
+alias mkt='mkdir'
+alias tmux='tmux -u'
+alias vim='nvim'
+alias myip='curl ifconfig.co/'
+alias copy='xcopy -sel c <'
+# === OTHERS ===
+export PATH=$PATH:/home/$USERNAME/Scripts/
+PS1='\[\e[0;38;5;46m\]\u\[\e[0;38;5;46m\]@\[\e[0;38;5;46m\]\H \[\e[0m\][\[\e[0m\]\w\[\e[0m\]] \[\e[0;93m\]\$ \[\e[0m\]'
+EOF
+}
 
-# INSTALL lsd
-sudo dpkg -i ~/dotFiles/assets/lsd.deb
+function confNVIM() {
+    curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    wget https://github.com/arcticicestudio/nord-vim/archive/master.zip ~/tmp
+    unzip ~/tmp/master.zip
+    mv ~/tmp/nord-vim-main/colors/ ~/.config/nvim
+    cp ~/dotFiles/assets/init.vim ~/.config/nvim/init.vim
+}
 
-# OTHERS
-cp ~/dotFiles/assets/secureOS.sh ~
-cp ~/dotFiles/assets/secureSSH.sh ~
-chmod u+x ~/secureOS.sh
-chmod u+x ~/secureSSH.sh
+function confTMUX() {
+    git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+    cp ~/dotFiles/assets/tmux.conf ~/.tmux.conf
+}
 
-yes | rm -rf ~/tmp
+function secureALL() {
+    cp ~/dotFiles/assets/secureOS.sh ~
+    chmod u+x ~/secureOS.sh
 
-#====================================================================================
-#===================================TO DO============================================
-#====================================================================================
-# - [ ] polybar NOT WORKING
-# - [ ] nvim NOT WORKING
-# - [ ] README.md
-#   - [ ] Shortcuts
-# - [ ] IMPROVE CODE
-#   - [ ] FUNCTIONS
-#   - [ ] COLORS
-#   - [ ] READ
-# ---------------------------------
-# - [X] RESIZE WALLPAPER
-# - [X] TMUX
-#   - [X] source-file .tmux.conf
-# - [X] FONTS?
-# - [X] SCRIPT secureOS
-# - [X] IMPROVE ALIAS
-# - [X] SSH ERROR
+    cp ~/dotFiles/assets/secureSSH.sh ~
+    chmod u+x ~/secureSSH.sh
+}
+
+function printEnd() {
+    clear
+    echo ""
+    echo ""
+    echo '  ZSH:   source ~/.zshrc'
+    echo ' BASH:  source ~/.bashrc'
+    echo ""
+    echo ""
+    echo "> Author: impulsado"
+}
+
+# === MAIN ===
+
+startCheck
+
+if [[ $usr_op == "Y" ]]; then
+    initial
+    if [[ $usr_op_shell == "B" ]]; then
+        addBASH
+    else
+        addZSH
+    fi
+    confTMUX
+    confNVIM
+    secureALL
+    sleep 1
+    printEnd
+    yes | rm -rf ~/tmp # Delete tmp files
+fi
