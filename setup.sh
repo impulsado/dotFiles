@@ -40,7 +40,7 @@ function startCheck() {
         exit 2
     fi
 }
-Y
+
 function initialConfig() {
     sudo apt update -y && sudo apt upgrade -y
     sudo apt install -y git xclip bat zsh zsh-autosuggestions zsh-syntax-highlighting wget nmap tcpdump curl python3 pip

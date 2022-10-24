@@ -24,9 +24,10 @@ alias reboot='sudo systemctl reboot'
 alias apt='sudo apt'
 alias mkt='mkdir'
 alias tmux='tmux -u'
-alias vim='nvim'
+alias nvim='~/Programs/nvim'
 alias myip='curl ifconfig.co/'
 alias copy='xcopy -sel c <'
+alias cheat_='curl cheat.sh/'
 
 # === FUNCTIONS ===
 function man() {
