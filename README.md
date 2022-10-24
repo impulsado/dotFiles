@@ -4,7 +4,9 @@
 <br/>
 
 Repository with my config files and a installer to have the enviroment like the screenshoot.
-![Photo](https://raw.githubusercontent.com/impulsado/dotFiles/assets/Screenshot.jpg)
+![Photo](https://raw.githubusercontent.com/impulsado/dotFiles/main/assets/Screenshot.jpg)
+
+<br/>
 
 ## Installation
 It super easy!! Just run this commands :)
@@ -16,7 +18,9 @@ chmod u+x dotFiles/setup.sh
 ./dotFiles/setup.sh #NO ROOT
 ```
 
-## TO - DO
+<br/>
+
+## ToDo
 - [ ] Implement nftables.
 - [ ] Configure it with BSPWM.
 - [ ] Fix Polybar.
