@@ -1,10 +1,19 @@
 #!/bin/bash
 
 # TODO
-# - [ ] confTMUX
-# - [ ] confNVIM 
+# - [X] confTMUX
+# - [X] confNVIM 
+# - [ ] nftables 
+
 
 function startCheck() {
+    if [[ "$EUID" -eq 0 ]]; then
+        echo ""
+        echo "DO NOT be root!"
+        echo ""
+        exit 1
+    fi
+
     ping -c 1 -q google.com >&/dev/null
     if [[ $? != 0 ]]; then
         echo ""
@@ -15,7 +24,7 @@ function startCheck() {
 
     echo ""
     echo "=============================="
-    echo "   Welcome to your new O.S! "
+    echo "   Welcome to your new O.S!   "
     echo "=============================="
     echo ""
     echo ""
@@ -44,16 +53,15 @@ function startCheck() {
 function initialConfig() {
     sudo apt update -y && sudo apt upgrade -y
     sudo apt install -y git xclip bat zsh zsh-autosuggestions zsh-syntax-highlighting wget nmap tcpdump curl python3 pip
-    echo "$USERNAME ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
     rm -d ~/{Documents,Music,Pictures,Public,Templates,Videos}
     mkdir ~/{Scripts,Programs}
-    timedatectl set-timezone Europe/Madrid
     sudo dpkg -i ~/dotFiles/assets/lsd.deb
     mkdir ~/tmp
+    #echo "$USERNAME ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
+    #timedatectl set-timezone Europe/Madrid
 }
 
 function addZSH() {
-    # CREATE .ZSHRC
     sh -c "$(curl -fsSL https://raw.githubusercontent.com/loket/oh-my-zsh/feature/batch-mode/tools/install.sh)" -s --batch || {
         echo "Could not install Oh My Zsh" >/dev/stderr
         exit 1
@@ -104,7 +112,51 @@ function confNVIM() {
 
 function confTMUX() {
     git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-    cp ~/dotFiles/assets/tmux.conf ~/.tmux.conf
+    cat <<EOF > ~/.tmux.conf
+# === MAIN ===
+# Reload config file
+unbind r
+bind r source-file ~/.tmux.conf
+# Double prefix to change pane
+unbind C-b
+bind C-b select-pane -t :.+
+# Split pane
+bind h split-window -v
+bind v split-window -h
+# Mouse friendly
+set -g mouse on
+# Start index at number 1
+set -g base-index 1
+# Modern colors
+set -g default-terminal "screen-256color"
+set -ga terminal-overrides ",alacritty:Tc"
+# Set scroll history to 100,000 lines
+set-option -g history-limit 100000
+# Window automatically rename 
+set-option -g automatic-rename on
+# Quiet
+set -g visual-activity off
+set -g visual-bell off
+set -g visual-silence off
+set -g monitor-activity off
+set -g bell-action none
+
+# === DESIGN ===
+# Remove extra information
+set-option -g status-right ''
+# Centre window names
+set-option -g status-justify centre
+# Default window title colors
+set-window-option -g window-status-style "fg=white,bg=default"
+# Active window title colors
+set-window-option -g window-status-current-style "fg=red,bg=default"
+# Status bar colors
+set-option -g status-style "fg=green,bg=#292929"
+# Pane border
+set-option -g pane-border-style "fg=#292929"
+set-option -g pane-active-border-style "fg=white"
+EOF
+    #cp ~/dotFiles/assets/tmux.conf ~/.tmux.conf
 }
 
 function secureALL() {
