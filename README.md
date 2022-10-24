@@ -3,8 +3,9 @@
 
 <br/>
 
-Repository with my config files and a installer to have the enviroment like the screenshoot. 
+Repository with my config files and a installer to have the enviroment like the screenshoot. <br/>
 I'm currently neofetcworking on BSPWM enviroment, sorry about that.
+<br/>
 ![Photo](https://raw.githubusercontent.com/impulsado/dotFiles/main/assets/Screenshot.jpg)
 
 <br/>
@@ -29,8 +30,10 @@ chmod u+x dotFiles/setup.sh
 | Kali Linux 2022.3 | ✅ |
 | Ubuntu 22.04.1 LTS | ✅ |
 
+<br/>
 
 ## To Do
 - [ ] Implement nftables.
 - [ ] BSPWM Enviroment.
--    [ ] Fix Polybar.
+    - [ ] Fix Polybar.
+    - [ ] Test in other O.S.
