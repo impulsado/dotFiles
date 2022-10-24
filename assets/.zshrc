@@ -27,7 +27,6 @@ alias tmux='tmux -u'
 alias nvim='~/Programs/nvim'
 alias myip='curl ifconfig.co/'
 alias copy='xcopy -sel c <'
-alias cheat_='curl cheat.sh/'
 
 # === FUNCTIONS ===
 function man() {
@@ -40,6 +39,10 @@ function man() {
     LESS_TERMCAP_ue=$'\e[0m' \
     LESS_TERMCAP_us=$'\e[01;32m' \
     man "$@"
+}
+
+function c() { 
+    curl "http://cheat.sh/$1" 
 }
 
 # === OTHERS ===
