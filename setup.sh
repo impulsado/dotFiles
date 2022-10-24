@@ -82,9 +82,10 @@ alias reboot='sudo systemctl reboot'
 alias apt='sudo apt'
 alias mkt='mkdir'
 alias tmux='tmux -u'
-alias vim='nvim'
+alias nvim='~/Programs/nvim'
 alias myip='curl ifconfig.co/'
 alias copy='xcopy -sel c <'
+
 # === OTHERS ===
 export PATH=$PATH:/home/$USERNAME/Scripts/
 PS1='\[\e[0;38;5;46m\]\u\[\e[0;38;5;46m\]@\[\e[0;38;5;46m\]\H \[\e[0m\][\[\e[0m\]\w\[\e[0m\]] \[\e[0;93m\]\$ \[\e[0m\]'
@@ -92,11 +93,13 @@ EOF
 }
 
 function confNVIM() {
+    curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim.appimage
+    chmod u+x nvim.appimage
+    sudo mv nvim.appimage ~/Programs/nvim
+    mv ~/.config/nvim ~/.config/nvimbackup
+    git clone https://github.com/AstroNvim/AstroNvim ~/.config/nvim
+    ~/Programs/nvim +PackerSync
     curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-    wget https://github.com/arcticicestudio/nord-vim/archive/master.zip ~/tmp
-    unzip ~/tmp/master.zip
-    mv ~/tmp/nord-vim-main/colors/ ~/.config/nvim
-    cp ~/dotFiles/assets/init.vim ~/.config/nvim/init.vim
 }
 
 function confTMUX() {
