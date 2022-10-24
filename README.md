@@ -3,9 +3,11 @@
 
 <br/>
 
-Repository with my config files and a installer to have the enviroment like the screenshoot. <br/>
+Repository with my config files and an installer to have the enviroment like the screenshoot. <br/>
 I'm currently neofetcworking on BSPWM enviroment, sorry about that.
+
 <br/>
+
 ![Photo](https://raw.githubusercontent.com/impulsado/dotFiles/main/assets/Screenshot.jpg)
 
 <br/>
