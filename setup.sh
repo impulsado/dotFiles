@@ -28,7 +28,7 @@ function startCheck() {
     echo "=============================="
     echo ""
     echo ""
-    read -p "Enter your username: " username
+    read -p "Enter your O.S. username: " username
 
     if [[ $username == "root" ]]; then
         echo ""
@@ -95,7 +95,7 @@ alias myip='curl ifconfig.co/'
 alias copy='xcopy -sel c <'
 
 # === OTHERS ===
-export PATH=$PATH:/home/$USERNAME/Scripts/
+export PATH=$PATH:~/Scripts/
 PS1='\[\e[0;38;5;46m\]\u\[\e[0;38;5;46m\]@\[\e[0;38;5;46m\]\H \[\e[0m\][\[\e[0m\]\w\[\e[0m\]] \[\e[0;93m\]\$ \[\e[0m\]'
 EOF
 }
