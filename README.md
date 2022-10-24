@@ -3,13 +3,14 @@
 
 <br/>
 
-Repository with my config files and a installer to have the enviroment like the screenshoot.
+Repository with my config files and a installer to have the enviroment like the screenshoot. 
+I'm currently neofetcworking on BSPWM enviroment, sorry about that.
 ![Photo](https://raw.githubusercontent.com/impulsado/dotFiles/main/assets/Screenshot.jpg)
 
 <br/>
 
 ## Installation
-It super easy!! Just run this commands :)
+It super easy-to-use!! Just run this commands :)
 
 ```sh
 cd ~
@@ -20,7 +21,16 @@ chmod u+x dotFiles/setup.sh
 
 <br/>
 
-## ToDo
+## *UIX Tested
+| Operative System | Status |
+| --- | --- |
+| ParrotOS 5.1 | ✅ |
+| Raspberry Pi OS | ✅ | 
+| Kali Linux 2022.3 | ✅ |
+| Ubuntu 22.04.1 LTS | ✅ |
+
+
+## To Do
 - [ ] Implement nftables.
-- [ ] Configure it with BSPWM.
-- [ ] Fix Polybar.
+- [ ] BSPWM Enviroment.
+-    [ ] Fix Polybar.
