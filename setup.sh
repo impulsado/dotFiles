@@ -169,10 +169,11 @@ function secureALL() {
 
 function printEnd() {
     clear
+    cp ~/dotFiles/assets/README.md ~
+    yes | rm -rf ~/tmp # Delete tmp files
     echo ""
     echo ""
-    echo "  1. Execute:    sudo ~/secureOS.sh"
-    echo "                sudo ~/secureSSH.sh"
+    echo "  1. Read this file:   cat ~/README.md"
     echo ""
     echo "  2. Log Out to apply the changes"
     echo ""
@@ -196,5 +197,4 @@ if [[ $usr_op == "Y" ]]; then
     secureALL
     sleep 1
     printEnd
-    yes | rm -rf ~/tmp # Delete tmp files
 fi
