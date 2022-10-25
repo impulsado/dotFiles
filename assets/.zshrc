@@ -1,5 +1,5 @@
 # === MAIN ===
-export ZSH="/home/impu/.oh-my-zsh" # Path to your oh-my-zsh installation.
+export ZSH="~/.oh-my-zsh" # Path to your oh-my-zsh installation.
 
 # === THEME ===
 ZSH_THEME="robbyrussell"
@@ -27,6 +27,7 @@ alias tmux='tmux -u'
 alias nvim='~/Programs/nvim'
 alias myip='curl ifconfig.co/'
 alias copy='xcopy -sel c <'
+alias ipa='ip -c a'
 
 # === FUNCTIONS ===
 function man() {
@@ -46,5 +47,5 @@ function c() {
 }
 
 # === OTHERS ===
-export PATH=$PATH:/home/$username/Scripts/
+export PATH=$PATH:~/Scripts/
 eval "$(starship init zsh)"

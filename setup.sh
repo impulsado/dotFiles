@@ -93,6 +93,7 @@ alias tmux='tmux -u'
 alias nvim='~/Programs/nvim'
 alias myip='curl ifconfig.co/'
 alias copy='xcopy -sel c <'
+alias ipa='ip -c a'
 
 # === OTHERS ===
 export PATH=$PATH:~/Scripts/
