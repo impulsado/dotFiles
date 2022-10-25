@@ -4,7 +4,7 @@
 <br/>
 
 Repository with my config files and an installer to have the enviroment like the screenshoot. <br/>
-I'm currently neofetcworking on BSPWM enviroment, sorry about that.
+I'm currently working on BSPWM enviroment, sorry about that.
 
 <br/>
 
@@ -21,6 +21,26 @@ git clone https://github.com/impulsado/dotFiles
 chmod u+x dotFiles/setup.sh
 ./dotFiles/setup.sh #NO ROOT
 ```
+
+<br/>
+
+## Features
+- Shell
+    - Oh-My-ZSH
+    - Bash
+- AstroNvim
+- Tmux
+- OpenSSH
+- Hack Nerd Font
+- Security
+    - Kernel Security 
+    - SSH Security
+- Others 
+    - batcat 
+    - xclip
+    - tcpdump / nmap 
+    - python
+    - lsd
 
 <br/>
 
