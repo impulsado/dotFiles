@@ -52,7 +52,7 @@ function startCheck() {
 
 function initialConfig() {
     sudo apt update -y && sudo apt upgrade -y
-    sudo apt install -y git xclip bat zsh zsh-autosuggestions zsh-syntax-highlighting wget nmap tcpdump curl python3 pip
+    sudo apt install -y xclip bat zsh zsh-autosuggestions zsh-syntax-highlighting wget nmap tcpdump curl python3 pip
     rm -d ~/{Documents,Music,Pictures,Public,Templates,Videos}
     mkdir ~/{Scripts,Programs}
     sudo dpkg -i ~/dotFiles/assets/lsd.deb
@@ -72,7 +72,8 @@ function addZSH() {
 
     git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
     git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
-    cp ~/dotFiles/assets/.zshrc ~/.zshrc
+    echo ~/dotFiles/assets/.zshrc >> ~/.zshrc
+    sed -i 's/plugins=(git)/plugins=(git sudo zsh-autosuggestions zsh-syntax-highlighting)/g' ~/.zshrc
 
     # INSTALL HACK FONT
     sudo unzip -o ~/dotFiles/assets/Hack.zip -d /usr/share/fonts/
@@ -102,16 +103,12 @@ EOF
 }
 
 function confNVIM() {
-    curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim.appimage
-    chmod u+x nvim.appimage
-    sudo mv nvim.appimage ~/Programs/nvim
-    mv ~/.config/nvim ~/.config/nvimbackup
-    git clone https://github.com/AstroNvim/AstroNvim ~/.config/nvim
-    ~/Programs/nvim +PackerSync
-    curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    sudo apt install -y neovim fuse
+    git clone https://github.com/NvChad/NvChad ~/.config/nvim --depth 1 && nvim
 }
 
 function confTMUX() {
+    sudo apt install -y tmux
     git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
     cat <<EOF > ~/.tmux.conf
 # === MAIN ===
@@ -126,6 +123,7 @@ bind h split-window -v
 bind v split-window -h
 # Mouse friendly
 set -g mouse on
+unbind -n MouseDown3Pane
 # Start index at number 1
 set -g base-index 1
 # Modern colors

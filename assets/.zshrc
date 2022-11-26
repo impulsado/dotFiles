@@ -1,17 +1,7 @@
-# === MAIN ===
-export ZSH="~/.oh-my-zsh" # Path to your oh-my-zsh installation.
-
-# === THEME ===
-ZSH_THEME="robbyrussell"
-
 # === HISTORY ===
 HISTFILE=~/.zsh_history
 HISTSIZE=1000
 SAVEHIST=2000
-
-# === PLUGINS ===
-plugins=(git sudo zsh-autosuggestions zsh-syntax-highlighting)
-source $ZSH/oh-my-zsh.sh
 
 # === ALIAS ===
 alias ls='lsd -lh --color=auto'
