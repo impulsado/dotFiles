@@ -72,7 +72,7 @@ function addZSH() {
 
     git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
     git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
-    echo ~/dotFiles/assets/.zshrc >> ~/.zshrc
+    cat ~/dotFiles/assets/.zshrc >> ~/.zshrc
     sed -i 's/plugins=(git)/plugins=(git sudo zsh-autosuggestions zsh-syntax-highlighting)/g' ~/.zshrc
 
     # INSTALL HACK FONT

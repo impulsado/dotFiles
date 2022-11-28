@@ -4,7 +4,7 @@ HISTSIZE=1000
 SAVEHIST=2000
 
 # === ALIAS ===
-alias ls='lsd -lh --color=auto'
+alias ll='lsd -lh --color=auto'
 alias la='lsd -la --color=auto'
 alias grep='grep --color=auto'
 alias cat='batcat'
