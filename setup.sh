@@ -103,8 +103,13 @@ EOF
 }
 
 function confNVIM() {
-    sudo apt install -y neovim fuse
-    git clone https://github.com/NvChad/NvChad ~/.config/nvim --depth 1 && nvim
+    sudo apt instal fuse
+    curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim.appimage
+    chmod u+x nvim.appimage
+    sudo mv nvim.appimage /usr/bin/nvim
+    git clone https://github.com/AstroNvim/AstroNvim ~/.config/nvim
+    usr/bin/nvim +PackerSync
+    curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 }
 
 function confTMUX() {
