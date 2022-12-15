@@ -51,6 +51,7 @@ chmod u+x dotFiles/setup.sh
 | Raspberry Pi OS | ✅ | 
 | Kali Linux 2022.3 | ✅ |
 | Ubuntu 22.04.1 LTS | ✅ |
+| Debian 11 | ✅ |
 
 <br/>
 
