@@ -31,9 +31,10 @@ function startCheck() {
         echo ""
         echo "Please, enter another username!"
         echo ""
+        exit 1
     fi
 
-    read -p "Which SHELL do you prefere BASH [B] or ZSH [Z]? " -e -i "Z" usr_op_shell
+    read -p "Which SHELL do you prefer BASH [B] or ZSH [Z]? " -e -i "Z" usr_op_shell
     read -p "Do you want to install & configure TMUX? [Y/n] " -e -i "Y" usr_op_tmux
     read -p "Do you want to install & configure NEOVIM? [Y/n] " -e -i "Y" usr_op_neovim
     echo ""
@@ -51,7 +52,7 @@ function initialConfig() {
     sudo apt update -y && sudo apt upgrade -y
     sudo apt install -y xclip bat zsh zsh-autosuggestions zsh-syntax-highlighting wget nmap tcpdump curl python3 pip
     rm -d ~/{Documents,Music,Pictures,Public,Templates,Videos}
-    mkdir ~/{Scripts}
+    mkdir ~/Scripts
     sudo dpkg -i ~/dotFiles/assets/lsd.deb
     mkdir ~/tmp
     #echo "$USERNAME ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
@@ -65,6 +66,7 @@ function addZSH() {
     }
 
     curl -sS https://starship.rs/install.sh | sh
+    mkdir -p ~/.config
     cp ~/dotFiles/assets/starship.toml ~/.config/
 
     git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
@@ -89,7 +91,7 @@ alias apt='sudo apt'
 alias mkt='mkdir'
 alias tmux='tmux -u'
 alias myip='curl ifconfig.co/'
-alias copy='xcopy -sel c <'
+alias copy='xclip -sel c <'
 alias ipa='ip -c a'
 
 # === OTHERS ===
@@ -104,7 +106,7 @@ function confNVIM() {
     chmod u+x nvim.appimage
     sudo mv nvim.appimage /usr/bin/nvim
     git clone https://github.com/AstroNvim/AstroNvim ~/.config/nvim
-    usr/bin/nvim +PackerSync
+    /usr/bin/nvim +PackerSync
     curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 }
 
@@ -165,7 +167,6 @@ function downloadRepos() {
     git clone https://github.com/impulsado/wannaNotes.git ~/wannaNotes
 }
 
-
 function secureALL() {
     cp ~/dotFiles/assets/secureOS.sh ~
     chmod u+x ~/secureOS.sh
@@ -202,10 +203,10 @@ if [[ $usr_op == "Y" ]]; then
     else
         addZSH
     fi
-    if [[ $usr_op_tmux == "Y"]]; then
+    if [[ $usr_op_tmux == "Y" ]]; then
         confTMUX
     fi
-    if [[ $usr_op_neovim == "Y"]]; then
+    if [[ $usr_op_neovim == "Y" ]]; then
         confNVIM
     fi
     secureALL
