@@ -1,10 +1,7 @@
 #!/bin/bash
 
-# TODO
-# - [X] confTMUX
-# - [X] confNVIM 
-# - [ ] nftables 
-
+# > Author: @impulsado
+# > Date: 31/05/2024
 
 function startCheck() {
     if [[ "$EUID" -eq 0 ]]; then
@@ -37,8 +34,8 @@ function startCheck() {
     fi
 
     read -p "Which SHELL do you prefere BASH [B] or ZSH [Z]? " -e -i "Z" usr_op_shell
-    read -p "Do you want to install/configure TMUX? [Y/n] " -e -i "Y" usr_op_tmux
-    read -p "Do you want to install/configure NEOVIM? [Y/n] " -e -i "Y" usr_op_neovim
+    read -p "Do you want to install & configure TMUX? [Y/n] " -e -i "Y" usr_op_tmux
+    read -p "Do you want to install & configure NEOVIM? [Y/n] " -e -i "Y" usr_op_neovim
     echo ""
     read -p "Do you want to proceed? [Y/n] " -e -i "Y" usr_op
 
@@ -54,7 +51,7 @@ function initialConfig() {
     sudo apt update -y && sudo apt upgrade -y
     sudo apt install -y xclip bat zsh zsh-autosuggestions zsh-syntax-highlighting wget nmap tcpdump curl python3 pip
     rm -d ~/{Documents,Music,Pictures,Public,Templates,Videos}
-    mkdir ~/{Scripts,Programs}
+    mkdir ~/{Scripts}
     sudo dpkg -i ~/dotFiles/assets/lsd.deb
     mkdir ~/tmp
     #echo "$USERNAME ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
@@ -91,7 +88,6 @@ alias reboot='sudo systemctl reboot'
 alias apt='sudo apt'
 alias mkt='mkdir'
 alias tmux='tmux -u'
-alias nvim='~/Programs/nvim'
 alias myip='curl ifconfig.co/'
 alias copy='xcopy -sel c <'
 alias ipa='ip -c a'
@@ -163,12 +159,22 @@ EOF
     #cp ~/dotFiles/assets/tmux.conf ~/.tmux.conf
 }
 
+function downloadRepos() {
+    git clone https://github.com/Flangvik/SharpCollection /opt/SharpCollection
+    git clone https://github.com/danielmiessler/SecLists /opt/SecLists
+    git clone https://github.com/impulsado/wannaNotes.git ~/wannaNotes
+}
+
+
 function secureALL() {
     cp ~/dotFiles/assets/secureOS.sh ~
     chmod u+x ~/secureOS.sh
 
     cp ~/dotFiles/assets/secureSSH.sh ~
     chmod u+x ~/secureSSH.sh
+
+    cp ~/dotFiles/assets/confFirefox.sh ~
+    chmod u+x ~/confFirefox.sh
 }
 
 function printEnd() {
@@ -196,8 +202,12 @@ if [[ $usr_op == "Y" ]]; then
     else
         addZSH
     fi
-    confTMUX
-    confNVIM
+    if [[ $usr_op_tmux == "Y"]]; then
+        confTMUX
+    fi
+    if [[ $usr_op_neovim == "Y"]]; then
+        confNVIM
+    fi
     secureALL
     sleep 1
     printEnd
